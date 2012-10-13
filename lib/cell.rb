@@ -5,10 +5,8 @@ class Cell < Point
   def initialize(*args)
     if args.size == 1 && args[0].is_a?(Point)
       super(args[0].x, args[0].y)
-    elsif args.size == 2
-      super
     else
-      raise "wtf args error"
+      super
     end
     self
   end
