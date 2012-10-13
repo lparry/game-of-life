@@ -1,5 +1,7 @@
 require File.expand_path("../world", __FILE__)
 class WorldPrinter
+
+
   def initialize(start_x, start_y, width, height)
     @start_x, @start_y, @width, @height = start_x, start_y, width, height
   end
