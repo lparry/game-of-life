@@ -11,10 +11,10 @@ class Game
     world = initial_world
     while (true)
       str = @printer.print(world)
-      puts "\e[H\e[2J"
-      puts str
-      sleep(0.10)
+      puts "\e[H\e[2J#{str}"
+      fork { sleep(0.05) }
       world = world.next_tick
+      Process.wait
     end
   end
 
@@ -28,5 +28,5 @@ class Game
 end
 
 if $0 == __FILE__
-  Game.new(WorldPrinter.new(0, 0, 40, 20)).run
+  Game.new(WorldPrinter.new(0, 0, 60, 20), 0.2).run
 end
