@@ -21,7 +21,7 @@ class Game
   def initial_world
     World.new(@printer.column_range.map do |x|
       @printer.row_range.map do |y|
-        Cell.new(x, y) if rand > @percentage_filled
+        Cell.new(x, y) if rand < @percentage_filled
       end
     end.flatten.compact)
   end
