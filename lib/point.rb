@@ -1,6 +1,8 @@
 class Point < Struct.new(:x, :y)
   def next_to?(other)
-    (other.x - x).abs <= 1 && (other.y - y).abs <= 1
+    (other.x - x).abs <= 1 &&
+      (other.y - y).abs <= 1 &&
+      self != other
   end
 
   def ==(other)

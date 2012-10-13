@@ -1,6 +1,24 @@
 require File.expand_path('../../lib/cell', __FILE__)
 
 describe Cell do
+  it "can be created from coordinates" do
+    cell = Cell.new(1,5)
+    cell.x.should == 1
+    cell.y.should == 5
+  end
+
+  it "can be created from a Point" do
+    cell = Cell.new(Point(1,5))
+    cell.x.should == 1
+    cell.y.should == 5
+  end
+
+  it "can be created from a Cell" do
+    cell = Cell.new(Cell.new(1,5))
+    cell.x.should == 1
+    cell.y.should == 5
+  end
+
   it "should know its neighbors" do
     cell = Cell.new(2, 2)
 
@@ -15,20 +33,6 @@ describe Cell do
       Point(3,2),
       Point(3,3)
     ]
-  end
-
-  it "should know if its the same Cell" do
-    Cell.new(1, 2, :alive).should == Cell.new(1, 2)
-
-    Cell.new(1,2).should_not == Cell.new(1,3)
-  end
-
-  it "should know if it's alive?" do
-    Cell.new(1, 2, false).should_not be_alive
-    Cell.new(1, 2, true).should be_alive
-    cell = Cell.new(1, 2)
-    cell.alive = true
-    cell.should be_alive
   end
 
 end

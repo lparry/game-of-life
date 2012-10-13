@@ -8,6 +8,7 @@ describe Point do
     a.next_to?(b).should be_true
     b.next_to?(a).should be_true
     a.next_to?(c).should be_false
+    a.next_to?(a).should be_false
 
   end
 

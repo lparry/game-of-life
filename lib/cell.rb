@@ -1,30 +1,22 @@
 require File.expand_path("../point", __FILE__)
 
-class Cell
-  attr_accessor :point, :alive
-  alias :alive? :alive
+class Cell < Point
 
-  def initialize(x, y, alive = false)
-    @point = Point(x, y)
-    @alive = !!alive
-  end
-
-  def next_to?(other)
-    point.next_to? other.point
-  end
-
-  def ==(other)
-    point == other.point
-  end
-
-  def <=>(other)
-    point <=> other.point
+  def initialize(*args)
+    if args.size == 1 && args[0].is_a?(Point)
+      super(args[0].x, args[0].y)
+    elsif args.size == 2
+      super
+    else
+      raise "wtf args error"
+    end
+    self
   end
 
   def affect_area
-    ((point.x-1)..(point.x+1)).map do |x_value|
-      ((point.y-1)..(point.y+1)).map do |y_value|
-        Point.new(x_value, y_value) 
+    ((x-1)..(x+1)).map do |x_value|
+      ((y-1)..(y+1)).map do |y_value|
+        Point.new(x_value, y_value)
       end
     end.flatten.compact
   end
