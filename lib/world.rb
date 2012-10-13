@@ -1,7 +1,13 @@
 require File.expand_path("../cell", __FILE__)
 class World < Struct.new(:cells)
-  def important_points
-    cells.map(&:affect_area).flatten.uniq
+  def surrounding_points
+    cells.map(&:affect_area).flatten.uniq.reject{|point| cells.any?{|cell| cell == point }}
+  end
+
+  def population_data
+    @population_data ||= (surrounding_points + cells).map do |point|
+      [living_neighbours(point), point]
+    end
   end
 
   def living_neighbours(point)
@@ -16,21 +22,19 @@ class World < Struct.new(:cells)
   end
 
   def live_cells_in_next_tick
-    live_cells_with_two_live_neighbours +
-      cells_with_three_live_neighbours
-  end
-
-  def live_cells_with_two_live_neighbours
-    cells.select do |cell|
-      living_neighbours(cell) == 2
-    end
-  end
-
-  def cells_with_three_live_neighbours
-    important_points.map do |point|
-      Cell.new(point) if living_neighbours(point) == 3
+    population_data.map do |data|
+        point_with_three_live_neighbours(*data) || live_cell_with_two_live_neighbours(*data)
     end.compact
   end
+
+  def live_cell_with_two_live_neighbours(neighbours, point)
+    point if neighbours == 2 && point.is_a?(Cell)
+  end
+
+  def point_with_three_live_neighbours(neighbours, point)
+    Cell.new(point) if neighbours == 3
+  end
+
 end
 
 
