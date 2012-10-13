@@ -20,9 +20,9 @@ describe World do
   end
 
   it 'knows what points are worth looking at' do
-    subject.important_points.should == [
-      x.affect_area + y.affect_area + z.affect_area
-    ].flatten.uniq.sort
+    [x.affect_area + y.affect_area + z.affect_area].flatten.each do |point|
+      subject.important_points.should include(point)
+    end
 
     subject.important_points.count.should == 18
   end
