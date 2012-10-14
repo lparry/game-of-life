@@ -23,23 +23,17 @@ class Game
   def update_printer(char)
     case char
     when 'h' #left
-      @printer.start_x -= 1
+      @printer.move_left
     when 'j' #down
-      @printer.start_y += 1
+      @printer.move_down
     when 'k' #up
-      @printer.start_y -= 1
+      @printer.move_up
     when 'l' #right
-      @printer.start_x += 1
+      @printer.move_right
     when "-"
-      @printer.start_x += 1
-      @printer.start_y += 1
-      @printer.width  -= 2
-      @printer.height -= 2
+      @printer.zoom_out
     when "+"
-      @printer.start_x -= 1
-      @printer.start_y -= 1
-      @printer.width  += 2
-      @printer.height += 2
+      @printer.zoom_in
     when 'q'
       exit(0)
     else
