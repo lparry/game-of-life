@@ -42,11 +42,9 @@ class Game
   end
 
   def initial_world
-    World.new(@printer.column_range.map do |x|
-      @printer.row_range.map do |y|
+    World.new(@printer.visible_pixels.map do |x, y|
         Cell.new(x, y) if rand < @percentage_filled
-      end
-    end.flatten.compact)
+    end.compact)
   end
 
   def get_char
@@ -64,5 +62,5 @@ class Game
 end
 
 if $0 == __FILE__
-  Game.new(WorldPrinter.new(0, 0, 40, 20), 0.20).run
+  Game.new(WorldPrinter.new(0, 0, 40, 30), 0.20).run
 end

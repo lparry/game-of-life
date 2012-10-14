@@ -54,6 +54,10 @@ class WorldPrinter
     end
   end
 
+  def visible_pixels
+    column_range.to_a.product(row_range.to_a)
+  end
+
   def print(world)
     render(world).map do |line|
       line.map do |char|
