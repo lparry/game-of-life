@@ -1,6 +1,7 @@
 require File.expand_path("../world", __FILE__)
 class WorldPrinter
 
+  attr_accessor :start_x, :start_y
 
   def initialize(start_x, start_y, width, height)
     @start_x, @start_y, @width, @height = start_x, start_y, width, height
