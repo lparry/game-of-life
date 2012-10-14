@@ -1,5 +1,6 @@
 require File.expand_path("../world", __FILE__)
 require File.expand_path("../world_printer", __FILE__)
+require File.expand_path("../viewport", __FILE__)
 require 'io/wait'
 
 class Game
@@ -69,5 +70,5 @@ class Game
 end
 
 if $0 == __FILE__
-  Game.new(WorldPrinter.new(0, 0, 40, 30), 0.20).run
+  Game.new(WorldPrinter.new(Viewport.new(0, 0, 40, 30)), 0.20).run
 end

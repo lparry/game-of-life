@@ -1,61 +1,24 @@
 require File.expand_path("../world", __FILE__)
+require 'forwardable'
+
 class WorldPrinter
 
+  extend Forwardable
 
-  def initialize(start_x, start_y, width, height)
-    @start_x, @start_y, @width, @height = start_x, start_y, width, height
-  end
+  def_delegators :@viewport, :move_left, :move_right, :move_up, :move_down, :zoom_in, :zoom_out, :visible_pixels
 
-  def move_left
-    @start_x -= 1
-  end
-
-  def move_right
-    @start_x += 1
-  end
-
-  def move_up
-    @start_y -= 1
-  end
-
-  def move_down
-    @start_y += 1
-  end
-
-  def zoom_in
-    @start_x -= 1
-    @start_y -= 1
-    @width  += 2
-    @height += 2
-  end
-
-  def zoom_out
-    @start_x += 1
-    @start_y += 1
-    @width  -= 2
-    @height -= 2
-  end
-
-  def row_range
-    (@start_y...(@start_y + @height))
-  end
-
-  def column_range
-    (@start_x...(@start_x + @width))
+  def initialize(viewport)
+    @viewport = viewport
   end
 
   def render(world)
-    row_range.map{|row| render_row(world, row) }
+    @viewport.row_range.map{|row| render_row(world, row) }
   end
 
   def render_row(world, y)
-    column_range.map do |x|
+    @viewport.column_range.map do |x|
       world.cells.include?(Point(x, y))
     end
-  end
-
-  def visible_pixels
-    column_range.to_a.product(row_range.to_a)
   end
 
   def print(world)
