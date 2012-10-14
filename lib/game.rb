@@ -30,6 +30,16 @@ class Game
       @printer.start_y -= 1
     when 'l' #right
       @printer.start_x += 1
+    when "-"
+      @printer.start_x += 1
+      @printer.start_y += 1
+      @printer.width  -= 2
+      @printer.height -= 2
+    when "+"
+      @printer.start_x -= 1
+      @printer.start_y -= 1
+      @printer.width  += 2
+      @printer.height += 2
     when 'q'
       exit(0)
     else
@@ -60,5 +70,5 @@ class Game
 end
 
 if $0 == __FILE__
-  Game.new(WorldPrinter.new(0, 0, 60, 20), 0.15).run
+  Game.new(WorldPrinter.new(0, 0, 40, 20), 0.20).run
 end

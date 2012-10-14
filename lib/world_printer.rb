@@ -1,18 +1,18 @@
 require File.expand_path("../world", __FILE__)
 class WorldPrinter
 
-  attr_accessor :start_x, :start_y
+  attr_accessor :start_x, :start_y, :width, :height
 
   def initialize(start_x, start_y, width, height)
     @start_x, @start_y, @width, @height = start_x, start_y, width, height
   end
 
   def row_range
-    (@start_y...(@start_y + @height))
+    (start_y...(start_y + height))
   end
 
   def column_range
-    (@start_x...(@start_x + @width))
+    (start_x...(start_x + width))
   end
 
   def render(world)
