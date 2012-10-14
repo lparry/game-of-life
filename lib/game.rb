@@ -3,6 +3,9 @@ require File.expand_path("../world_printer", __FILE__)
 require 'io/wait'
 
 class Game
+
+  attr_writer :initial_world
+
   def initialize(printer, percentage_filled = 0.5)
     @printer = printer
     @percentage_filled = percentage_filled
@@ -11,8 +14,7 @@ class Game
   def run
     world = initial_world
     while (true)
-      str = @printer.print(world)
-      puts "\e[H\e[2J#{str}"
+      puts "#{clear_screen_char}#{@printer.print(world)}"
       fork { sleep(0.05) }
       world = world.next_tick
       update_printer(get_char)
@@ -41,10 +43,10 @@ class Game
     end
   end
 
+  private
+
   def initial_world
-    World.new(@printer.visible_pixels.map do |x, y|
-        Cell.new(x, y) if rand < @percentage_filled
-    end.compact)
+    @initial_world ||= World.generate(@printer.visible_pixels, @percentage_filled)
   end
 
   def get_char
@@ -58,6 +60,11 @@ class Game
     ensure
       system "stty -raw echo > /dev/null 2>&1" # turn raw input off
     end
+  end
+
+
+  def clear_screen_char
+    "\e[H\e[2J"
   end
 end
 

@@ -1,5 +1,12 @@
 require File.expand_path("../cell", __FILE__)
 class World < Struct.new(:cells)
+
+  def self.generate(visible_pixels, percentage_populated)
+    new(visible_pixels.map do |x, y|
+        Cell.new(x, y) if rand < percentage_populated
+    end.compact)
+  end
+
   def surrounding_points
     cells.map(&:affect_area).flatten.uniq.reject{|point| cells.any?{|cell| cell == point }}
   end
