@@ -5,21 +5,21 @@ describe Point do
     b = Point(2, 2)
     c = Point(2, 3)
 
-    a.next_to?(b).should be_true
-    b.next_to?(a).should be_true
-    a.next_to?(c).should be_false
-    a.next_to?(a).should be_false
+    expect(a.next_to?(b)).to be true
+    expect(b.next_to?(a)).to be true
+    expect(a.next_to?(c)).to be false
+    expect(a.next_to?(a)).to be false
 
   end
 
   it "should know if its the same point" do
-    Point(1,2).should == Point(1,2)
+    expect(Point(1,2)).to eq(Point(1,2))
 
-    Point(1,2).should_not == Point(1,3)
+    expect(Point(1,2)).to_not eq(Point(1,3))
   end
 
   it "should would with array.uniq" do
-    [Point(1,2), Point(1,2)].uniq.length.should == 1
+    expect([Point(1,2), Point(1,2)].uniq.length).to eq(1)
   end
 
   context "spaceship" do
@@ -35,15 +35,15 @@ describe Point do
 
 
     it "should sort" do
-      (tr <=> tr).should == 0
-      (tr <=> tc).should == -1
-      (tc <=> tr).should == 1
+      expect((tr <=> tr)).to eq(0)
+      expect((tr <=> tc)).to eq(-1)
+      expect((tc <=> tr)).to eq(1)
 
-      (tr <=> mr).should == -1
-      (mr <=> tr).should == 1
+      expect((tr <=> mr)).to eq(-1)
+      expect((mr <=> tr)).to eq(1)
 
-    [tr, tc, tl, mr, mc, ml, br, bc, bl].shuffle.sort.should ==
-     [tr, tc, tl, mr, mc, ml, br, bc, bl]
+    expect([tr, tc, tl, mr, mc, ml, br, bc, bl].shuffle.sort).to eq(
+     [tr, tc, tl, mr, mc, ml, br, bc, bl])
 
 
     end

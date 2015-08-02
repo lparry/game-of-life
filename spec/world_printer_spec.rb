@@ -11,27 +11,27 @@ describe WorldPrinter do
   subject{ WorldPrinter.new(viewport) }
 
   it "should calculate a row" do
-    subject.render_row(world, 3).should == [false, true, false, false]
+    expect(subject.render_row(world, 3)).to eq([false, true, false, false])
   end
 
   it "should make a pretty string" do
-    subject.print(world).should == [
+    expect(subject.print(world)).to eq([
       "    ",
       "    ",
       " x  ",
       " x  ",
       " x  ",
-    ].join("\n")
+    ].join("\n"))
   end
 
   it "should calculate the world" do
-    subject.render(world).should == [
+    expect(subject.render(world)).to eq([
       [false, false, false, false],
       [false, false, false, false],
       [false, true, false, false],
       [false, true, false, false],
       [false, true, false, false]
-    ]
+    ])
   end
 
 end

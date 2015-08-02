@@ -16,61 +16,61 @@ describe World do
   subject {World.new [x, y, z]}
 
   it 'has many cells' do
-    subject.cells.length.should == 3
+    expect(subject.cells.length).to eq(3)
   end
 
   it 'knows what points are worth looking at' do
     total_area =  [x.affect_area + y.affect_area + z.affect_area].flatten
     subject.surrounding_points.each do |point|
-      total_area.should include(point)
-      subject.cells.should_not include(point)
+      expect(total_area).to include(point)
+      expect(subject.cells).to_not include(point)
     end
 
-    subject.surrounding_points.count.should == 15
+    expect(subject.surrounding_points.count).to eq(15)
   end
 
   it "counts the living cells next to a point" do
-    subject.living_neighbours(Point(0,0)).should == 0
-    subject.living_neighbours(Point(0,2)).should == 1
-    subject.living_neighbours(Point(2,2)).should == 2
-    subject.living_neighbours(Point(1,2)).should == 1
+    expect(subject.living_neighbours(Point(0,0))).to eq(0)
+    expect(subject.living_neighbours(Point(0,2))).to eq(1)
+    expect(subject.living_neighbours(Point(2,2))).to eq(2)
+    expect(subject.living_neighbours(Point(1,2))).to eq(1)
   end
 
   it "should calculate population data once per turn" do
-    subject.should_receive(:living_neighbours).at_least(1)
+    expect(subject).to receive(:living_neighbours).at_least(1)
     subject.population_data
-    subject.should_not_receive(:living_neighbours)
+    expect(subject).to_not receive(:living_neighbours)
   end
 
   it "finds live cells with two live neighbors" do
     point = Point.new
     cell = Cell.new
-    subject.live_cell_with_two_live_neighbours(1, point).should be_nil
-    subject.live_cell_with_two_live_neighbours(2, point).should be_nil
-    subject.live_cell_with_two_live_neighbours(3, point).should be_nil
-    subject.live_cell_with_two_live_neighbours(1, cell).should be_nil
-    subject.live_cell_with_two_live_neighbours(3, cell).should be_nil
+    expect(subject.live_cell_with_two_live_neighbours(1, point)).to be_nil
+    expect(subject.live_cell_with_two_live_neighbours(2, point)).to be_nil
+    expect(subject.live_cell_with_two_live_neighbours(3, point)).to be_nil
+    expect(subject.live_cell_with_two_live_neighbours(1, cell)).to be_nil
+    expect(subject.live_cell_with_two_live_neighbours(3, cell)).to be_nil
 
-    subject.live_cell_with_two_live_neighbours(2, cell).should == cell
-    subject.live_cell_with_two_live_neighbours(2, cell).should be_a(Cell)
+    expect(subject.live_cell_with_two_live_neighbours(2, cell)).to eq(cell)
+    expect(subject.live_cell_with_two_live_neighbours(2, cell)).to be_a(Cell)
   end
 
   it "finds cells with three live neighbors" do
     cell = Point.new
-    subject.point_with_three_live_neighbours(2, cell).should be_nil
-    subject.point_with_three_live_neighbours(4, cell).should be_nil
+    expect(subject.point_with_three_live_neighbours(2, cell)).to be_nil
+    expect(subject.point_with_three_live_neighbours(4, cell)).to be_nil
 
-    subject.point_with_three_live_neighbours(3, cell).should == cell
-    subject.point_with_three_live_neighbours(3, cell).should be_a(Cell)
+    expect(subject.point_with_three_live_neighbours(3, cell)).to eq(cell)
+    expect(subject.point_with_three_live_neighbours(3, cell)).to be_a(Cell)
   end
 
   it "finds the live cells for the next tick" do
-    subject.live_cells_in_next_tick.should == [Cell.new(1, 3), Cell.new(2, 3)]
+    expect(subject.live_cells_in_next_tick).to eq([Cell.new(1, 3), Cell.new(2, 3)])
   end
 
   it "gives a new world with the next tick of cells" do
-    subject.next_tick.should be_a(World)
-    subject.next_tick.cells.should == [Cell.new(1, 3), Cell.new(2, 3)]
+    expect(subject.next_tick).to be_a(World)
+    expect(subject.next_tick.cells).to eq([Cell.new(1, 3), Cell.new(2, 3)])
   end
 end
 
