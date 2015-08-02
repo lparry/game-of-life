@@ -68,10 +68,3 @@ class Game
     "\e[H\e[2J"
   end
 end
-
-if $0 == __FILE__
-  viewport = Viewport.new(0, 0, 80, 60)
-  game = Game.new(WorldPrinter.new(viewport))
-  game.initial_world = World.generate(Viewport.new(20, 15, 40,30).visible_pixels, 0.20)
-  game.run
-end
